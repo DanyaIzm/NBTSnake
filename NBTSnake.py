@@ -28,6 +28,8 @@ def main():
     nbt_parser.parse()
     
     nbt_parser.save_to_file(args.output)
+    
+    nbt_parser.print_root()
 
 
 if __name__ == '__main__':

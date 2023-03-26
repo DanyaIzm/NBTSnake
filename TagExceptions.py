@@ -10,7 +10,7 @@ class TagException(Exception):
 class CanNotParseTag(TagException):
     def __init__(self, tag_type: TagType, value: Any, *args: object) -> None:
         super().__init__(*args)
-        self.tag_type
+        self.tag_type = tag_type
         self.tag_value = value
         
     def __str__(self) -> str:

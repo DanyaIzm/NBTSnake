@@ -100,14 +100,14 @@ class TagByteArray(TagCompoundBase):
 
 
 class TagString(TagCompoundBase):
-    def __init__(self, name: str, length: TagInt, string: str) -> None:
+    def __init__(self, name: str, length: TagShort, string: str) -> None:
         super().__init__(TagType.TAG_STRING, name)
 
-        if type(length) != TagInt:
-            raise CanNotParseCompondTag(TagType.TAG_STRING, TagType.TAG_INT, length)
+        if type(length) != TagShort:
+            raise CanNotParseCompondTag(TagType.TAG_STRING, TagType.TAG_SHORT, length)
         
         if type(string) != str:
-            raise CanNotParseCompondTag(TagType.TAG_STRING, str, length)
+            raise CanNotParseCompondTag(TagType.TAG_STRING, str, string)
 
         
         self.append(length)
