@@ -16,6 +16,17 @@ class Tag(TagNotNamed):
     def __init__(self, tag_type: TagType, name: str, payload: Any | None) -> None:
         super().__init__(tag_type, payload)
         self.name = name
+        self.payload = payload
+    
+    def __str__(self):
+        return f"{self.tag_type}(\"{self.name}\"):"
+    
+    def tree(self, indent: int):
+        # TODO: refactor this 
+        if type(self.payload) == bytes:
+            return "\t" * indent + str(self) + f" {self.payload.hex()}" + "\n"
+        else:
+            return "\t" * indent + str(self) + f" {self.payload}" + "\n"
 
 
 class TagCompoundBase(Tag):
@@ -25,6 +36,19 @@ class TagCompoundBase(Tag):
     
     def append(self, tag: Tag) -> None:
         self.tags.append(tag)
+    
+    def tree(self, indent):
+        string = " " * indent + str(self) + " {" + "\n"
+        for tag in self.tags:
+            # TODO: refactor
+            if hasattr(tag, "tree"):
+                string += tag.tree(indent + 1)
+            else:
+                # TODO: refactor this 
+                if type(tag) == bytes:
+                    tag = tag.hex()
+                string += "\t" * (indent + 1) + "Value: " + str(tag) + "\n"
+        return string + "\t" * indent + "}" + "\n"
 
 
 class TagCompound(TagCompoundBase):
@@ -34,7 +58,7 @@ class TagCompound(TagCompoundBase):
 
 class TagEnd(TagNotNamed):
     def __init__(self) -> None:
-        super().__init__(TagType.TAG_END)
+        super().__init__(TagType.TAG_END, None)
 
 
 class TagByte(Tag):
@@ -112,6 +136,9 @@ class TagString(TagCompoundBase):
         
         self.append(length)
         self.append(string)
+    
+    def __str__(self):
+        return super().__str__() + f" {self.name}"
 
 
 class TagList(TagCompoundBase):
