@@ -38,7 +38,7 @@ class TagCompoundBase(Tag):
         self.tags.append(tag)
     
     def tree(self, indent):
-        string = " " * indent + str(self) + " {" + "\n"
+        string = "\t" * indent + str(self) + " {" + "\n"
         for tag in self.tags:
             # TODO: refactor
             if hasattr(tag, "tree"):

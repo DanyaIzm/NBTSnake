@@ -8,10 +8,11 @@ from TagTypes import TagType
 
 
 class Parser():
-    def __init__(self, file_path: str) -> None:
+    def __init__(self, file_path: str, encoding: str) -> None:
         self.file_path = file_path
         self.bytes_buffer = None
         self.parsed_root = None
+        self.encoding = encoding
     
     def print_root(self):
         print(self.parsed_root.tree(0))
@@ -48,7 +49,7 @@ class Parser():
         folder = ".\\"  + output_file_path.split("\\")[0]
         if not os.path.exists(folder):
             os.mkdir(folder)
-        with open(output_file_path, "w+") as file:
+        with open(output_file_path, "w+", encoding=self.encoding) as file:
             file.write(self.parsed_root.tree(0))
 
     def split_buffer(self, length):

@@ -31,8 +31,10 @@ def get_file_format(parser_args):
 
 def main():
     args = get_args_from_user()
+    # TODO: remove hardcoded encoding
+    encoding = "utf-8"
     
-    nbt_parser = Parser(args.file)
+    nbt_parser = Parser(args.file, encoding)
 
     nbt_parser.parse()
     
