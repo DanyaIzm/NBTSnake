@@ -1,5 +1,7 @@
+import os
 import struct
 from gzip import GzipFile, BadGzipFile
+from FileFomats import FileFormat
 
 import Tag
 from TagTypes import TagType
@@ -32,8 +34,22 @@ class Parser():
             # TODO: custom exception
             raise Exception("First tag should be compound!")
     
-    def save_to_file(self, output_file_path: str) -> None:
-        pass
+    def save_to_file(self, output_file_path: str, format) -> None:
+        if format == FileFormat.JSON:
+            self._save_to_json(output_file_path)
+        else:
+            self._save_to_visual(output_file_path)
+        
+    def _save_to_json(self, output_file_path: str):
+        raise NotImplementedError(self.__class__.__name__)
+    
+    def _save_to_visual(self, output_file_path: str):
+        # TODO: refactor (BAD PRACTICE)
+        folder = ".\\"  + output_file_path.split("\\")[0]
+        if not os.path.exists(folder):
+            os.mkdir(folder)
+        with open(output_file_path, "w+") as file:
+            file.write(self.parsed_root.tree(0))
 
     def split_buffer(self, length):
         buff = self.bytes_buffer[0:length]

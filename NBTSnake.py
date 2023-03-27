@@ -5,6 +5,7 @@
 """
 
 import argparse
+from FileFomats import FileFormat
 from NBTParser import Parser
 
 
@@ -15,9 +16,17 @@ def get_args_from_user() -> argparse.Namespace:
     )
     
     arg_parser.add_argument("--file", "-f", help="Input file in .nbt format", required=True)
-    arg_parser.add_argument("--output", "-o", help="Output file. JSON format", required=True)
+    arg_parser.add_argument("--output", "-o", help="Output file. Visual or JSON", required=True)
+    arg_parser.add_argument("--json", "-j", default=False, help="Output to JSON file")
     
     return arg_parser.parse_args()
+
+
+def get_file_format(parser_args):
+    if parser_args.json:
+        return FileFormat.JSON
+    else:
+        return FileFormat.VISUAL
 
 
 def main():
@@ -27,7 +36,7 @@ def main():
 
     nbt_parser.parse()
     
-    nbt_parser.save_to_file(args.output)
+    nbt_parser.save_to_file(args.output, get_file_format(args))
     
     nbt_parser.print_root()
 
