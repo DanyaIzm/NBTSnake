@@ -26,10 +26,33 @@ TagType.TAG_COMPOUND("b'Level'"): {
 	TagType.TAG_LIST("b'listTest (long)'"): {
 		TagType.TAG_BYTE(""): 4
 		TagType.TAG_INT(""): 5
+		TasgList[
+			TagType.TAG_LONG(""): 11
+			TagType.TAG_LONG(""): 12
+			TagType.TAG_LONG(""): 13
+			TagType.TAG_LONG(""): 14
+			TagType.TAG_LONG(""): 15
+		]
 	}
 	TagType.TAG_LIST("b'listTest (compound)'"): {
 		TagType.TAG_BYTE(""): 10
 		TagType.TAG_INT(""): 2
+		TasgList[
+			TagType.TAG_COMPOUND(""): {
+				TagType.TAG_STRING("b'name'"): b'name' {
+					TagType.TAG_SHORT(""): 15
+					Value: Compound tag #0
+				}
+				TagType.TAG_LONG("b'created-on'"): 1264099775885
+			}
+			TagType.TAG_COMPOUND(""): {
+				TagType.TAG_STRING("b'name'"): b'name' {
+					TagType.TAG_SHORT(""): 15
+					Value: Compound tag #1
+				}
+				TagType.TAG_LONG("b'created-on'"): 1264099775885
+			}
+		]
 	}
 	TagType.TAG_BYTE("b'byteTest'"): 127
 	TagType.TAG_BYTE_ARRAY("b'byteArrayTest (the first 1000 values of (n*n*255+n*7)%100, starting with n=0 (0, 62, 34, 16, 8, ...))'"): {

@@ -48,6 +48,7 @@ class TagCompoundBase(Tag):
                 if type(tag) == bytes:
                     tag = tag.hex()
                 string += "\t" * (indent + 1) + "Value: " + str(tag) + "\n"
+        
         return string + "\t" * indent + "}" + "\n"
 
 
@@ -159,3 +160,26 @@ class TagList(TagCompoundBase):
         self.append(tag_id)
         self.append(length)
         self.tagsList = tags
+    
+    def tree(self, indent):
+        # TODO: refactor
+        string = "\t" * indent + str(self) + " {" + "\n"
+        for tag in self.tags:
+            if hasattr(tag, "tree"):
+                string += tag.tree(indent + 1)
+            else:
+                if type(tag) == bytes:
+                    tag = tag.hex()
+                string += "\t" * (indent + 1) + "Value: " + str(tag) + "\n"
+        
+        string += "\t" * (indent + 1) + "TasgList[\n"
+        for tag in self.tagsList:
+            if hasattr(tag, "tree"):
+                string += tag.tree(indent + 2)
+            else:
+                if type(tag) == bytes:
+                    tag = tag.hex()
+                string += "\t" * (indent + 2) + "Value: " + str(tag) + "\n"
+        string += "\t" * (indent + 1) + "]\n"
+        
+        return string + "\t" * indent + "}" + "\n"
